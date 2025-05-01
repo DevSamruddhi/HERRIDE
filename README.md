@@ -47,6 +47,5 @@ python manage.py migrate
 # Start the development server
 python manage.py runserver
 
-#🧑‍💻 Contributors
-##Samruddhi - Developer![login_img](https://github.com/user-attachments/assets/75be051f-7ad0-46c5-9dfe-1a209ce90867)
-
+🧑‍💻 Contributors
+Samruddhi - Developer
