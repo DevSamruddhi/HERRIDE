@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Us - Her Ride</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+       .bg-black{
+        background-color: black;
+      }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .join-container {
+            max-width: 800px;
+            margin: auto;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(255, 215, 0, 0.5);
+        }
+        h1 {
+            color: gold;
+        }
+        .benefits {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .benefits li {
+            margin: 10px 0;
+        }
+        .cta-button {
+            background: gold;
+            color: black;
+            padding: 15px 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .cta-button:hover {
+            background: #daa520;
+        }
+    </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">HER RIDE</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="{%url 'home'%}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{%url 'about'%}">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{%url 'services'%}">Services</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{%url 'contact'%}">Contact</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="{%url 'jobs'%}">Opportunity</a>
+              </li>
+              </ul></div></div></nav></div><br>
+
+    <div class="join-container">
+        <h1>Join Us at Her Ride</h1>
+        <p>Be a part of a safe, empowering, and premium ride-sharing experience.</p>
+        
+        <div class="benefits">
+            <h2>Why Join Us?</h2>
+            <ul>
+                <li>✅ Flexible working hours</li>
+                <li>✅ High earning potential</li>
+                <li>✅ Secure & safe environment</li>
+                <li>✅ Exclusive benefits for women drivers</li>
+            </ul>
+        </div>
+        
+        <a href="{%url 'dlogin'%}" class="cta-button">Join Now</a>
+    </div>
+    <footer class="bg-black text-white text-center py-3" style="position: fixed; bottom: 0; width: 100%;">
+      © 2025 HER RIDE | All Rights Reserved
+  </footer>
+  
+
+</body>
+</html>

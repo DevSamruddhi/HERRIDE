@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOK Ride</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Leaflet Routing Machine -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css"/>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <!-- Leaflet Routing Machine CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+<!-- Leaflet Routing Machine JS -->
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
+
+    <style>
+        body {
+            display: flex;
+            justify-content: space-between;
+            height: 100vh;
+            padding: 20px;
+            background-color: black;
+            gap: 20px;
+        }
+
+        #map {
+            height: 100%;
+            width: 50%;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-container {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            color: white;
+        }
+
+        #details {
+            max-width: 450px;
+            margin: auto;
+            padding: 20px;
+            background: #1E1E1E;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            color: gold;
+            font-size: 24px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            width: 90%;
+            border: 2px solid gold;
+            border-radius: 5px;
+            margin: 10px;
+            text-align: center;
+        }
+
+        button {
+            width: 95%;
+            background: gold;
+            color: black;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #daa520;
+        }
+    </style>
+</head>
+<body>
+    <!-- Map Container -->
+    <div id="map"></div>
+
+    <!-- Search Container -->
+    <div class="search-container">
+        <section id="details">
+            <h1>Enter Pickup & Drop</h1>
+            <input type="text" id="pickupSearchInput" placeholder="Enter pickup location" onblur="searchPickupLocation()">
+            <input type="text" id="dropSearchInput" placeholder="Enter drop location" onblur="searchDropLocation()">
+            <button onclick="searchPickupLocation(); searchDropLocation();">Find Route</button>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const map = L.map('map').setView([18.5204, 73.8567], 13);
+
+
+
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; OpenStreetMap'
+            }).addTo(map);
+
+            let pickupMarker, dropMarker, routeControl;
+
+            const pickupIcon = L.icon({
+                iconUrl: 'https://img.icons8.com/?size=100&id=RM2eatuBHIBM&format=png&color=000000',
+                iconSize: [40, 40],
+                iconAnchor: [20, 40],
+                popupAnchor: [0, -40],
+            });
+
+            const dropIcon = L.icon({
+                iconUrl: 'https://img.icons8.com/?size=100&id=VZ5k4kz9WpAw&format=png&color=000000',
+                iconSize: [40, 40],
+                iconAnchor: [20, 40],
+                popupAnchor: [0, -40],
+            });
+
+            function drawRoute() {
+                if (pickupMarker && dropMarker) {
+                    if (routeControl) map.removeControl(routeControl);
+
+                    routeControl = L.Routing.control({
+                        waypoints: [
+                            pickupMarker.getLatLng(),
+                            dropMarker.getLatLng()
+                        ],
+                        routeWhileDragging: true,
+                        createMarker: function() { return null; } // Hide default markers
+                    }).addTo(map);
+                }
+            }
+
+            window.searchPickupLocation = function () {
+                const query = document.getElementById('pickupSearchInput').value.trim();
+                if (!query) return alert("Enter a pickup location!");
+
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            const lat = parseFloat(data[0].lat);
+                            const lon = parseFloat(data[0].lon);
+
+                            map.setView([lat, lon], 13);
+
+                            if (pickupMarker) {
+                                pickupMarker.setLatLng([lat, lon]);
+                            } else {
+                                pickupMarker = L.marker([lat, lon], { icon: pickupIcon }).addTo(map);
+                            }
+
+                            pickupMarker.bindPopup(`<b>Pickup:</b> ${query}`).openPopup();
+                            drawRoute();
+                        } else {
+                            alert("Pickup location not found!");
+                        }
+                    });
+            };
+
+            window.searchDropLocation = function () {
+                const query = document.getElementById('dropSearchInput').value.trim();
+                if (!query) return alert("Enter a drop location!");
+
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            const lat = parseFloat(data[0].lat);
+                            const lon = parseFloat(data[0].lon);
+
+                            map.setView([lat, lon], 13);
+
+                            if (dropMarker) {
+                                dropMarker.setLatLng([lat, lon]);
+                            } else {
+                                dropMarker = L.marker([lat, lon], { icon: dropIcon }).addTo(map);
+                            }
+
+                            dropMarker.bindPopup(`<b>Drop:</b> ${query}`).openPopup();
+                            drawRoute();
+                        } else {
+                            alert("Drop location not found!");
+                        }
+                    });
+            };
+        });
+    </script>
+</body>
+</html>

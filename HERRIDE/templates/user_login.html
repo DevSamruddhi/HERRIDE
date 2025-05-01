@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Login - Her Ride</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link href="https://fonts.cdnfonts.com/css/lemon-tuesday" rel="stylesheet"> -->
+    <style>
+        body {
+            background-color: #111;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #info {
+            max-width: 550px;
+            margin: 100px auto;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 12px 25px rgba(255, 215, 0, 0.6);
+        }
+        h1, p {
+            text-align: center;
+            color: gold;
+            font-size: 24px;
+        }
+        input {
+            width: 90%;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid gold;
+            background: black;
+            color: white;
+            font-size: 16px;
+        }
+        input::placeholder {
+            color: gold;
+        }
+        form button {
+            width: 95%;
+            background: gold;
+            color: black;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 15px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        form button:hover {
+            background: #daa520;
+        }
+        #logo {
+            margin-top: 50px;
+            font-family: Lemon Tuesday;
+            font-size: 60px;
+            color: gold;
+        }
+        a {
+            color: gold;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            margin-top: 30px;
+            color: gold;
+            font-size: 14px;
+        }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 id="logo">Her Ride</h1>
+    </header>
+    <main>
+      <section id="info">
+        <h1>User Login </h1>
+        <form action="{% url 'map2' %}" method="POST">
+          {% csrf_token %}
+          <input type="email" id="text" name="uemail" placeholder="Email" required>
+          <input type="password" id="password" name="upwd" placeholder="Password" minlength="8" maxlength="16" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}" title="Password must be 8-16 characters, include at least one uppercase letter, one lowercase letter, one number, and one special character (@#$%^&+=)." required>
+          <span id="password-error" class="error"></span>
+          <button type="submit" >Login</button>
+          <p> Don't have an account? <a href="{% url 'registration'%}">Click here</a></p>
+        </form>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2025 HerRide. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
