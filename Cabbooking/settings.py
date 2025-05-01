@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'HERRIDE',
+    'payment',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +123,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Razorpay keys (use test keys for development)
+RAZORPAY_KEY_ID = 'rzp_test_Fpqz4DYvn4yJZc'
+RAZORPAY_KEY_SECRET = 'sCojal16W4HHYqUkxx5T9iKw'

@@ -17,7 +17,7 @@ Including another URLconf
 from django.shortcuts import render
 
 # Create your views here.
-from django.urls import path
+from django.urls import path,include
 import HERRIDE.views
 
 urlpatterns = [
@@ -29,5 +29,6 @@ urlpatterns = [
     path("registration/",HERRIDE.views.registration,name='registration'),
     path("userlogin/",HERRIDE.views.userlogin,name='ulogin'),
     path("driverlogin/",HERRIDE.views.driverlogin,name='dlogin'),
-    path("map2/",HERRIDE.views.map2,name='map2')
+    path("map2/",HERRIDE.views.map2,name='map2'),
+    path("payment/",include('payment.urls')),
 ]
